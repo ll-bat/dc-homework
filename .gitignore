@@ -3,5 +3,4 @@ venv
 .vscode
 db.sqlite3
 .env
-__pycache__
-dc_assignment/__pycache__
+__pycache__/
