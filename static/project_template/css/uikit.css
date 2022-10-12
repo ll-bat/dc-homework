@@ -1,0 +1,2022 @@
+.example::-webkit-scrollbar {
+    display: none;
+  }
+
+  [hidden],
+  .uk-hidden {
+    display: none !important;
+  }
+  
+
+
+/* ========================================================================
+   Component: Slideshow
+ ========================================================================== */
+/*
+ * 1. Prevent tab highlighting on iOS.
+ */
+ .uk-slideshow {
+  /* 1 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Items
+ ========================================================================== */
+/*
+ * 1. Create position and stacking context
+ * 2. Reset list
+ * 3. Clip child elements
+ * 4. Prevent displaying the callout information on iOS.
+ */
+.uk-slideshow-items {
+  /* 1 */
+  position: relative;
+  z-index: 0;
+  /* 2 */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* 3 */
+  overflow: hidden;
+  /* 4 */
+  -webkit-touch-callout: none;
+}
+
+/* Item
+ ========================================================================== */
+/*
+ * 1. Position items above each other
+ * 2. Take the full width
+ * 3. Clip child elements, e.g. for `uk-cover`
+ * 4. Optimize animation
+ * 5. Disable horizontal panning gestures in IE11 and Edge
+ * 6. Suppress outline on focus
+ */
+.uk-slideshow-items > * {
+  /* 1 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* 2 */
+  right: 0;
+  bottom: 0;
+  /* 3 */
+  overflow: hidden;
+  /* 4 */
+  will-change: transform, opacity;
+  /* 5 */
+  -ms-touch-action: pan-y;
+      touch-action: pan-y;
+}
+
+/* 6 */
+.uk-slideshow-items > :focus {
+  outline: none;
+}
+
+/*
+ * Hide not active items
+ */
+.uk-slideshow-items > :not(.uk-active) {
+  display: none;
+}
+
+/* ========================================================================
+   Component: Slider
+ ========================================================================== */
+/*
+ * 1. Prevent tab highlighting on iOS.
+ */
+.uk-slider {
+  /* 1 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Container
+ ========================================================================== */
+/*
+ * 1. Clip child elements
+ */
+.uk-slider-container {
+  /* 1 */
+  overflow: hidden;
+}
+
+/* Items
+ ========================================================================== */
+/*
+ * 1. Optimize animation
+ * 2. Create a containing block. In Safari it's neither created by `transform` nor `will-change`.
+ */
+.uk-slider-items {
+  /* 1 */
+  will-change: transform;
+  /* 2 */
+  position: relative;
+}
+
+/*
+ * 1. Reset list style without interfering with grid
+ * 2. Prevent displaying the callout information on iOS.
+ */
+.uk-slider-items:not(.uk-grid) {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  /* 1 */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* 2 */
+  -webkit-touch-callout: none;
+}
+
+.uk-slider-items.uk-grid {
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+}
+
+/* Item
+ ========================================================================== */
+/*
+ * 1. Let items take content dimensions (0 0 auto)
+ * 2. Create position context
+ * 3. Disable horizontal panning gestures in IE11 and Edge
+ * 4. Suppress outline on focus
+ */
+.uk-slider-items > * {
+  /* 1 */
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+  /* 2 */
+  position: relative;
+  /* 3 */
+  -ms-touch-action: pan-y;
+      touch-action: pan-y;
+}
+
+/* 4 */
+.uk-slider-items > :focus {
+  outline: none;
+}
+
+
+/* ========================================================================
+   Component: Dotnav
+ ========================================================================== */
+/*
+ * 1. Allow items to wrap into the next line
+ * 2. Reset list
+ * 3. Gutter
+ */
+ .uk-dotnav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  /* 1 */
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  /* 2 */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* 3 */
+  margin-left: -12px;
+}
+
+/*
+ * 1. Space is allocated solely based on content dimensions: 0 0 auto
+ * 2. Gutter
+ */
+.uk-dotnav > * {
+  /* 1 */
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+  /* 2 */
+  padding-left: 12px;
+}
+
+/* Items
+ ========================================================================== */
+/*
+ * Items
+ * 1. Hide text if present
+ */
+.uk-dotnav > * > * {
+  display: block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  /* 1 */
+  text-indent: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 1px solid rgba(102, 102, 102, 0.4);
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+  -webkit-transition-property: background-color, border-color;
+  transition-property: background-color, border-color;
+}
+
+/* Hover + Focus */
+.uk-dotnav > * > :hover,
+.uk-dotnav > * > :focus {
+  background-color: rgba(102, 102, 102, 0.6);
+  outline: none;
+  border-color: transparent;
+}
+
+/* OnClick */
+.uk-dotnav > * > :active {
+  background-color: rgba(102, 102, 102, 0.2);
+  border-color: transparent;
+}
+
+/* Active */
+.uk-dotnav > .uk-active > * {
+  background-color: rgba(102, 102, 102, 0.6);
+  border-color: transparent;
+}
+
+/* ========================================================================
+   Component: Drop
+ ========================================================================== */
+/*
+ * 1. Hide by default
+ * 2. Set position
+ * 3. Set a default width
+ */
+ .uk-drop {
+    /* 1 */
+    display: none;
+    /* 2 */
+    position: absolute;
+    z-index: 1020;
+    /* 3 */
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    width: 300px;
+  }
+  
+  /* Show */
+  .uk-drop.uk-open {
+    display: block;
+  }
+  
+  /* Direction / Alignment modifiers
+   ========================================================================== */
+  /* Direction */
+  [class*='uk-drop-top'] {
+    margin-top: -20px;
+  }
+  
+  [class*='uk-drop-bottom'] {
+    margin-top: 20px;
+  }
+  
+  [class*='uk-drop-left'] {
+    margin-left: -20px;
+  }
+  
+  [class*='uk-drop-right'] {
+    margin-left: 20px;
+  }
+  
+  /* Grid modifiers
+   ========================================================================== */
+  .uk-drop-stack .uk-drop-grid > * {
+    width: 100% !important;
+  }
+
+
+
+
+
+
+
+
+
+
+  /* ========================================================================
+   Component: Dropdown
+ ========================================================================== */
+/*
+ * 1. Hide by default
+ * 2. Set position
+ * 3. Set a default width
+ * 4. Style
+ */
+.uk-dropdown {
+    /* 1 */
+    display: none;
+    /* 2 */
+    position: absolute;
+    z-index: 1020;
+    /* 3 */
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    min-width: 200px;
+    /* 4 */
+    padding: 25px;
+    background: #fff;
+    color: #666;
+    -webkit-box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Show */
+  .uk-dropdown.uk-open {
+    display: block;
+  }
+  
+  /* Nav
+   * Adopts `uk-nav`
+   ========================================================================== */
+  .uk-dropdown-nav {
+    white-space: nowrap;
+    font-size: 1rem;
+  }
+  
+  /*
+   * Items
+   */
+  .uk-dropdown-nav > li > a {
+    color: #999;
+  }
+  
+  /* Hover + Focus + Active */
+  .uk-dropdown-nav > li > a:hover,
+  .uk-dropdown-nav > li > a:focus,
+  .uk-dropdown-nav > li.uk-active > a {
+    color: #666;
+  }
+
+
+
+  
+/* ========================================================================
+   Component: Sticky
+ ========================================================================== */
+/*
+ * 1. Resolve frame rate issues on devices with lower frame rates by forcing hardware acceleration
+ */
+.uk-sticky-fixed {
+    z-index: 980;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    margin: 0 !important;
+    /* 1 */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  /*
+   * Faster animations
+   */
+  .uk-sticky[class*='uk-animation-'] {
+    -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+  }
+  
+  .uk-sticky.uk-animation-reverse {
+    -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+  }
+  
+
+
+  
+/* ========================================================================
+   Component: Switcher
+ ========================================================================== */
+/*
+ * Reset list
+ */
+.uk-switcher {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  /* Items
+   ========================================================================== */
+  /*
+   * Hide not active items
+   */
+  .uk-switcher > :not(.uk-active) {
+    display: none;
+  }
+  
+  /*
+   * Remove margin from the last-child
+   */
+  .uk-switcher > * > :last-child {
+    margin-bottom: 0;
+  }
+
+  
+
+
+
+
+  
+/* Items
+ ========================================================================== */
+/*
+ * Items must target `a` elements to exclude other elements (e.g. dropdowns)
+ * 1. Center text if a width is set
+ * 2. Style
+ */
+.uk-tab > * > a {
+    /* 1 */
+    display: block;
+    text-align: center;
+    /* 2 */
+    padding: 5px 10px;
+    color: #999;
+    border-bottom: 2px solid transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    -webkit-transition: color 0.1s ease-in-out;
+    transition: color 0.1s ease-in-out;
+  }
+  
+  /* Hover + Focus */
+  .uk-tab > * > a:hover,
+  .uk-tab > * > a:focus {
+    color: #666;
+    text-decoration: none;
+  }
+  
+  /* Active */
+  .uk-tab > .uk-active > a {
+    color: #333;
+    border-color: #1e87f0;
+  }
+  
+  /* Disabled */
+  .uk-tab > .uk-disabled > a {
+    color: #999;
+  }
+  
+  /* Position modifier
+   ========================================================================== */
+  /*
+   * Bottom
+   */
+  .uk-tab-bottom::before {
+    top: 0;
+    bottom: auto;
+  }
+  
+  .uk-tab-bottom > * > a {
+    border-top: 2px solid transparent;
+    border-bottom: none;
+  }
+
+  
+
+
+  
+/* ========================================================================
+   Component: Lightbox
+ ========================================================================== */
+/*
+ * 1. Hide by default
+ * 2. Set position
+ * 3. Allow scrolling for the modal dialog
+ * 4. Horizontal padding
+ * 5. Mask the background page
+ * 6. Fade-in transition
+ * 7. Prevent cancellation of pointer events while dragging
+ */
+.uk-lightbox {
+    /* 1 */
+    display: none;
+    /* 2 */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1010;
+    /* 5 */
+    background: #000;
+    /* 6 */
+    opacity: 0;
+    -webkit-transition: opacity 0.15s linear;
+    transition: opacity 0.15s linear;
+    /* 7 */
+    -ms-touch-action: pinch-zoom;
+        touch-action: pinch-zoom;
+  }
+  
+  /*
+   * Open
+   * 1. Center child
+   * 2. Fade-in
+   */
+  .uk-lightbox.uk-open {
+    display: block;
+    /* 2 */
+    opacity: 1;
+  }
+  
+  /* Page
+   ========================================================================== */
+  /*
+   * Prevent scrollbars
+   */
+  .uk-lightbox-page {
+    overflow: hidden;
+  }
+  
+  /* Item
+   ========================================================================== */
+  /*
+   * 1. Center child within the viewport
+   * 2. Not visible by default
+   * 3. Color needed for spinner icon
+   * 4. Optimize animation
+   * 5. Responsiveness
+   *    Using `vh` for `max-height` to fix image proportions after resize in Safari and Opera
+   *    Using `vh` and `vw` to make responsive image work in IE11
+   * 6. Suppress outline on focus
+   */
+  .uk-lightbox-items > * {
+    /* 1 */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* 2 */
+    display: none;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    /* 3 */
+    color: rgba(255, 255, 255, 0.7);
+    /* 4 */
+    will-change: transform, opacity;
+  }
+  
+  /* 5 */
+  .uk-lightbox-items > * > * {
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+  
+  /* 6 */
+  .uk-lightbox-items > :focus {
+    outline: none;
+  }
+  
+  .uk-lightbox-items > * > :not(iframe) {
+    width: auto;
+    height: auto;
+  }
+  
+  .uk-lightbox-items > .uk-active {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  
+  /* Toolbar
+   ========================================================================== */
+  .uk-lightbox-toolbar {
+    padding: 10px 10px;
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .uk-lightbox-toolbar > * {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  /* Toolbar Icon (Close)
+   ========================================================================== */
+  .uk-lightbox-toolbar-icon {
+    padding: 5px;
+    color: rgba(255, 255, 255, 0.7);
+    background: wheat;
+    border-radius: 100px;
+    padding: 10px;
+    margin: 10px;
+  }
+  .uk-lightbox-toolbar-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /*
+   * Hover
+   */
+  .uk-lightbox-toolbar-icon:hover {
+    color: #fff;
+  }
+  
+  /* Button (Slidenav)
+   ========================================================================== */
+  /*
+   * 1. Center icon vertically and horizontally
+   */
+  .uk-lightbox-button {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 100px;
+    color: rgba(255, 255, 255, 0.7);
+    /* 1 */
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  
+  /*
+   * Hover
+   */
+  .uk-lightbox-button:hover {
+    color: #fff;
+  }
+  
+  /* Caption
+   ========================================================================== */
+  .uk-lightbox-caption:empty {
+    display: none;
+  }
+  
+  /* Iframe
+   ========================================================================== */
+  .uk-lightbox-iframe {
+    width: 80%;
+    height: 80%;
+  }
+  
+
+
+  
+/* ========================================================================
+   Component: Off-canvas
+ ========================================================================== */
+/*
+ * 1. Hide by default
+ * 2. Set position
+ */
+.uk-offcanvas {
+    /* 1 */
+    display: none;
+    /* 2 */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  
+  /*
+   * Flip modifier
+   */
+  .uk-offcanvas-flip .uk-offcanvas {
+    right: 0;
+    left: auto;
+  }
+  
+  /* Bar
+   ========================================================================== */
+  /*
+   * 1. Set position
+   * 2. Size and style
+   * 3. Allow scrolling
+   */
+  .uk-offcanvas-bar {
+    /* 1 */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -270px;
+    /* 2 */
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    width: 100%;
+    padding: 20px 20px;
+    background: #fff;
+    /* 3 */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Tablet landscape and bigger */
+  @media (min-width: 960px) {
+    .uk-offcanvas-bar {
+      left: -350px;
+      width: 350px;
+      padding: 40px 40px;
+    }
+  }
+  
+  /* Flip modifier */
+  .uk-offcanvas-flip .uk-offcanvas-bar {
+    left: auto;
+    right: -270px;
+  }
+  
+  /* Tablet landscape and bigger */
+  @media (min-width: 960px) {
+    .uk-offcanvas-flip .uk-offcanvas-bar {
+      right: -350px;
+    }
+  }
+  
+  /*
+   * Open
+   */
+  .uk-open > .uk-offcanvas-bar {
+    left: 0;
+  }
+  
+  .uk-offcanvas-flip .uk-open > .uk-offcanvas-bar {
+    left: auto;
+    right: 0;
+  }
+  
+  /*
+   * Slide Animation (Used in slide and push mode)
+   */
+  .uk-offcanvas-bar-animation {
+    -webkit-transition: left 0.3s ease-out;
+    transition: left 0.3s ease-out;
+  }
+  
+  .uk-offcanvas-flip .uk-offcanvas-bar-animation {
+    -webkit-transition-property: right;
+    transition-property: right;
+  }
+  
+  /*
+   * Reveal Animation
+   * 1. Set position
+   * 2. Clip the bar
+   * 3. Animation
+   * 4. Reset position
+   */
+  .uk-offcanvas-reveal {
+    /* 1 */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    /* 2 */
+    width: 0;
+    overflow: hidden;
+    /* 3 */
+    -webkit-transition: width 0.3s ease-out;
+    transition: width 0.3s ease-out;
+  }
+  
+  .uk-offcanvas-reveal .uk-offcanvas-bar {
+    /* 4 */
+    left: 0;
+  }
+  
+  .uk-offcanvas-flip .uk-offcanvas-reveal .uk-offcanvas-bar {
+    /* 4 */
+    left: auto;
+    right: 0;
+  }
+  
+  .uk-open > .uk-offcanvas-reveal {
+    width: 270px;
+  }
+  
+  /* Tablet landscape and bigger */
+  @media (min-width: 960px) {
+    .uk-open > .uk-offcanvas-reveal {
+      width: 350px;
+    }
+  }
+  
+  /*
+   * Flip modifier
+   */
+  .uk-offcanvas-flip .uk-offcanvas-reveal {
+    right: 0;
+    left: auto;
+  }
+  
+  /* Close
+   * Adopts `uk-close`
+   ========================================================================== */
+  .uk-offcanvas-close {
+    position: absolute;
+    z-index: 1000;
+    top: 20px;
+    right: 20px;
+    padding: 5px;
+  }
+  
+  /* Overlay
+   ========================================================================== */
+  /*
+   * Overlay the whole page. Needed for the `::before`
+   * 1. Using `100vw` so no modification is needed when off-canvas is flipped
+   * 2. Allow for closing with swipe gesture on devices with pointer events.
+   */
+  .uk-offcanvas-overlay {
+    /* 1 */
+    width: 100vw;
+    /* 2 */
+    -ms-touch-action: none;
+        touch-action: none;
+  }
+  
+  /*
+   * 1. Mask the whole page
+   * 2. Fade-in transition
+   */
+  .uk-offcanvas-overlay::before {
+    /* 1 */
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.1);
+    /* 2 */
+    opacity: 0;
+    -webkit-transition: opacity 0.15s linear;
+    transition: opacity 0.15s linear;
+  }
+  
+  .uk-offcanvas-overlay.uk-open::before {
+    opacity: 1;
+  }
+  
+  /* Prevent scrolling
+   ========================================================================== */
+  /*
+   * Prevent horizontal scrollbar when the content is slide-out
+   * Has to be on the `html` element too to make it work on the `body`
+   */
+  .uk-offcanvas-page,
+  .uk-offcanvas-container {
+    overflow-x: hidden;
+  }
+  
+  /* Container
+   ========================================================================== */
+  /*
+   * Prepare slide-out animation (Used in reveal and push mode)
+   * Using `position: left` instead of `transform` because position `fixed` elements like sticky navbars
+   * lose their fixed state and behaves like `absolute` within a transformed container
+   * 1. Provide a fixed width and prevent shrinking
+   */
+  .uk-offcanvas-container {
+    position: relative;
+    left: 0;
+    -webkit-transition: left 0.3s ease-out;
+    transition: left 0.3s ease-out;
+    /* 1 */
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    width: 100%;
+  }
+  
+  /*
+   * Activate slide-out animation
+   */
+  :not(.uk-offcanvas-flip).uk-offcanvas-container-animation {
+    left: 270px;
+  }
+  
+  .uk-offcanvas-flip.uk-offcanvas-container-animation {
+    left: -270px;
+  }
+  
+  /* Tablet landscape and bigger */
+  @media (min-width: 960px) {
+    :not(.uk-offcanvas-flip).uk-offcanvas-container-animation {
+      left: 350px;
+    }
+    .uk-offcanvas-flip.uk-offcanvas-container-animation {
+      left: -350px;
+    }
+  }
+
+
+
+  /* Label
+ ========================================================================== */
+/* ========================================================================
+   Component: Animation
+ ========================================================================== */
+[class*='uk-animation-'] {
+  -webkit-animation-duration: 0.5s;
+          animation-duration: 0.5s;
+  -webkit-animation-timing-function: ease-out;
+          animation-timing-function: ease-out;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+/* Animations
+ ========================================================================== */
+/*
+ * Fade
+ */
+.uk-animation-fade {
+  -webkit-animation-name: uk-fade;
+          animation-name: uk-fade;
+  -webkit-animation-duration: 0.8s;
+          animation-duration: 0.8s;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+
+/*
+ * Scale
+ */
+.uk-animation-scale-up {
+  -webkit-animation-name: uk-fade-scale-02;
+          animation-name: uk-fade-scale-02;
+}
+
+.uk-animation-scale-down {
+  -webkit-animation-name: uk-fade-scale-18;
+          animation-name: uk-fade-scale-18;
+}
+
+/*
+ * Slide
+ */
+.uk-animation-slide-top {
+  -webkit-animation-name: uk-fade-top;
+          animation-name: uk-fade-top;
+}
+
+.uk-animation-slide-bottom {
+  -webkit-animation-name: uk-fade-bottom;
+          animation-name: uk-fade-bottom;
+}
+
+.uk-animation-slide-left {
+  -webkit-animation-name: uk-fade-left;
+          animation-name: uk-fade-left;
+}
+
+.uk-animation-slide-right {
+  -webkit-animation-name: uk-fade-right;
+          animation-name: uk-fade-right;
+}
+
+/*
+ * Slide Small
+ */
+.uk-animation-slide-top-small {
+  -webkit-animation-name: uk-fade-top-small;
+          animation-name: uk-fade-top-small;
+}
+
+.uk-animation-slide-bottom-small {
+  -webkit-animation-name: uk-fade-bottom-small;
+          animation-name: uk-fade-bottom-small;
+}
+
+.uk-animation-slide-left-small {
+  -webkit-animation-name: uk-fade-left-small;
+          animation-name: uk-fade-left-small;
+}
+
+.uk-animation-slide-right-small {
+  -webkit-animation-name: uk-fade-right-small;
+          animation-name: uk-fade-right-small;
+}
+
+/*
+ * Slide Medium
+ */
+.uk-animation-slide-top-medium {
+  -webkit-animation-name: uk-fade-top-medium;
+          animation-name: uk-fade-top-medium;
+}
+
+.uk-animation-slide-bottom-medium {
+  -webkit-animation-name: uk-fade-bottom-medium;
+          animation-name: uk-fade-bottom-medium;
+}
+
+.uk-animation-slide-left-medium {
+  -webkit-animation-name: uk-fade-left-medium;
+          animation-name: uk-fade-left-medium;
+}
+
+.uk-animation-slide-right-medium {
+  -webkit-animation-name: uk-fade-right-medium;
+          animation-name: uk-fade-right-medium;
+}
+
+/*
+ * Kenburns
+ */
+.uk-animation-kenburns {
+  -webkit-animation-name: uk-scale-kenburns;
+          animation-name: uk-scale-kenburns;
+  -webkit-animation-duration: 15s;
+          animation-duration: 15s;
+}
+
+/*
+ * Shake
+ */
+.uk-animation-shake {
+  -webkit-animation-name: uk-shake;
+          animation-name: uk-shake;
+}
+
+/*
+ * SVG Stroke
+ * The `--uk-animation-stroke` custom property contains the longest path length.
+ * Set it manually or use `uk-svg="stroke-animation: true"` to set it automatically.
+ * All strokes are animated by the same pace and doesn't end simultaneously.
+ * To end simultaneously, `pathLength="1"` could be used, but it's not working in Safari yet.
+ */
+.uk-animation-stroke {
+  -webkit-animation-name: uk-stroke;
+          animation-name: uk-stroke;
+  stroke-dasharray: var(--uk-animation-stroke);
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+}
+
+/* Direction modifier
+ ========================================================================== */
+.uk-animation-reverse {
+  animation-direction: reverse;
+  -webkit-animation-timing-function: ease-in;
+          animation-timing-function: ease-in;
+}
+
+/* Duration modifier
+ ========================================================================== */
+.uk-animation-fast {
+  -webkit-animation-duration: 0.1s;
+          animation-duration: 0.1s;
+}
+
+/* Toggle (Hover + Focus)
+========================================================================== */
+/*
+ * The toggle is triggered on touch devices using `:focus` and tabindex
+ */
+.uk-animation-toggle:not(:hover):not(:focus) [class*='uk-animation-'] {
+  -webkit-animation-name: none;
+          animation-name: none;
+}
+
+/*
+ * 1. Prevent tab highlighting on iOS.
+ */
+.uk-animation-toggle {
+  /* 1 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/*
+ * Remove outline for `tabindex`
+ */
+.uk-animation-toggle:focus {
+  outline: none;
+}
+
+/* Keyframes used by animation classes
+ ========================================================================== */
+/*
+ * Fade
+ */
+@-webkit-keyframes uk-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes uk-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/*
+ * Slide Top
+ */
+@-webkit-keyframes uk-fade-top {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+@keyframes uk-fade-top {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+/*
+ * Slide Bottom
+ */
+@-webkit-keyframes uk-fade-bottom {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+@keyframes uk-fade-bottom {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+/*
+ * Slide Left
+ */
+@-webkit-keyframes uk-fade-left {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+@keyframes uk-fade-left {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+/*
+ * Slide Right
+ */
+@-webkit-keyframes uk-fade-right {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+@keyframes uk-fade-right {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+/*
+ * Slide Top Small
+ */
+@-webkit-keyframes uk-fade-top-small {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-10px);
+            transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+@keyframes uk-fade-top-small {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-10px);
+            transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+/*
+ * Slide Bottom Small
+ */
+@-webkit-keyframes uk-fade-bottom-small {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(10px);
+            transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+@keyframes uk-fade-bottom-small {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(10px);
+            transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+/*
+ * Slide Left Small
+ */
+@-webkit-keyframes uk-fade-left-small {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+@keyframes uk-fade-left-small {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+/*
+ * Slide Right Small
+ */
+@-webkit-keyframes uk-fade-right-small {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(10px);
+            transform: translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+@keyframes uk-fade-right-small {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(10px);
+            transform: translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+/*
+ * Slide Top Medium
+ */
+@-webkit-keyframes uk-fade-top-medium {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+@keyframes uk-fade-top-medium {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+/*
+ * Slide Bottom Medium
+ */
+@-webkit-keyframes uk-fade-bottom-medium {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(50px);
+            transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+@keyframes uk-fade-bottom-medium {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(50px);
+            transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+/*
+ * Slide Left Medium
+ */
+@-webkit-keyframes uk-fade-left-medium {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-50px);
+            transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+@keyframes uk-fade-left-medium {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-50px);
+            transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+/*
+ * Slide Right Medium
+ */
+@-webkit-keyframes uk-fade-right-medium {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(50px);
+            transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+@keyframes uk-fade-right-medium {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(50px);
+            transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+/*
+ * Scale Up
+ */
+@-webkit-keyframes uk-fade-scale-02 {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.2);
+            transform: scale(0.2);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes uk-fade-scale-02 {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.2);
+            transform: scale(0.2);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+/*
+ * Scale Down
+ */
+@-webkit-keyframes uk-fade-scale-18 {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(1.8);
+            transform: scale(1.8);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes uk-fade-scale-18 {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(1.8);
+            transform: scale(1.8);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+/*
+ * Kenburns
+ */
+@-webkit-keyframes uk-scale-kenburns {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+}
+@keyframes uk-scale-kenburns {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+}
+
+/*
+ * Shake
+ */
+@-webkit-keyframes uk-shake {
+  0%, 100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  10% {
+    -webkit-transform: translateX(-9px);
+            transform: translateX(-9px);
+  }
+  20% {
+    -webkit-transform: translateX(8px);
+            transform: translateX(8px);
+  }
+  30% {
+    -webkit-transform: translateX(-7px);
+            transform: translateX(-7px);
+  }
+  40% {
+    -webkit-transform: translateX(6px);
+            transform: translateX(6px);
+  }
+  50% {
+    -webkit-transform: translateX(-5px);
+            transform: translateX(-5px);
+  }
+  60% {
+    -webkit-transform: translateX(4px);
+            transform: translateX(4px);
+  }
+  70% {
+    -webkit-transform: translateX(-3px);
+            transform: translateX(-3px);
+  }
+  80% {
+    -webkit-transform: translateX(2px);
+            transform: translateX(2px);
+  }
+  90% {
+    -webkit-transform: translateX(-1px);
+            transform: translateX(-1px);
+  }
+}
+@keyframes uk-shake {
+  0%, 100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  10% {
+    -webkit-transform: translateX(-9px);
+            transform: translateX(-9px);
+  }
+  20% {
+    -webkit-transform: translateX(8px);
+            transform: translateX(8px);
+  }
+  30% {
+    -webkit-transform: translateX(-7px);
+            transform: translateX(-7px);
+  }
+  40% {
+    -webkit-transform: translateX(6px);
+            transform: translateX(6px);
+  }
+  50% {
+    -webkit-transform: translateX(-5px);
+            transform: translateX(-5px);
+  }
+  60% {
+    -webkit-transform: translateX(4px);
+            transform: translateX(4px);
+  }
+  70% {
+    -webkit-transform: translateX(-3px);
+            transform: translateX(-3px);
+  }
+  80% {
+    -webkit-transform: translateX(2px);
+            transform: translateX(2px);
+  }
+  90% {
+    -webkit-transform: translateX(-1px);
+            transform: translateX(-1px);
+  }
+}
+
+/*
+ * Stroke
+ */
+@-webkit-keyframes uk-stroke {
+  0% {
+    stroke-dashoffset: var(--uk-animation-stroke);
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes uk-stroke {
+  0% {
+    stroke-dashoffset: var(--uk-animation-stroke);
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+/* Line
+ ========================================================================== */
+/*
+ * Clip the child element
+ */
+ .uk-heading-line {
+  overflow: hidden;
+}
+
+/*
+ * Extra markup is needed to make it work with text align
+ */
+.uk-heading-line > * {
+  display: inline-block;
+  position: relative;
+}
+
+/*
+ * 1. Center vertically
+ * 2. Make the element as large as possible. It's clipped by the container.
+ * 3. Style
+ */
+.uk-heading-line > ::before,
+.uk-heading-line > ::after {
+  content: "";
+  /* 1 */
+  position: absolute;
+  top: calc(50% - (calc(0.2px + 0.05em) / 2));
+  /* 2 */
+  width: 2000px;
+  /* 3 */
+  border-bottom: calc(0.2px + 0.05em) solid #e5e5e5;
+}
+
+.uk-heading-line > ::before {
+  right: 100%;
+  margin-right: calc(5px + 0.3em);
+}
+
+.uk-heading-line > ::after {
+  left: 100%;
+  margin-left: calc(5px + 0.3em);
+}
+
+
+
+/* ========================================================================
+   Component: Accordion
+ ========================================================================== */
+ .uk-accordion {
+  padding: 0;
+  list-style: none;
+}
+
+/* Item
+ ========================================================================== */
+.uk-accordion > :nth-child(n+2) {
+  margin-top: 15px;
+}
+
+/* Title
+ ========================================================================== */
+.uk-accordion-title {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: black; font-weight: 500;
+  overflow: hidden;
+  padding-top: 15px;
+}
+
+.uk-accordion-title::before {
+  content: "";
+  width: 1.4em;
+  height: 1.4em;
+  margin-left: 10px;
+  float: right;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2213%22%20height%3D%2213%22%20viewBox%3D%220%200%2013%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23666%22%20width%3D%2213%22%20height%3D%221%22%20x%3D%220%22%20y%3D%226%22%20%2F%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23666%22%20width%3D%221%22%20height%3D%2213%22%20x%3D%226%22%20y%3D%220%22%20%2F%3E%0A%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.uk-open > .uk-accordion-title::before {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2213%22%20height%3D%2213%22%20viewBox%3D%220%200%2013%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23666%22%20width%3D%2213%22%20height%3D%221%22%20x%3D%220%22%20y%3D%226%22%20%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+/* Hover + Focus */
+.uk-accordion-title:hover,
+.uk-accordion-title:focus {
+  color: #666;
+  text-decoration: none;
+  outline: none;
+}
+
+/* Content
+ ========================================================================== */
+.uk-accordion-content {
+  margin-top: 15px;
+}
+
+/*
+ * Micro clearfix
+ */
+.uk-accordion-content::before,
+.uk-accordion-content::after {
+  content: "";
+  display: table;
+}
+
+.uk-accordion-content::after {
+  clear: both;
+}
+
+/*
+ * Remove margin from the last-child
+ */
+.uk-accordion-content > :last-child {
+  margin-bottom: 0;
+}
+
+
+
+/* ========================================================================
+   Component: Spinner
+ ========================================================================== */
+/*
+ * Adopts `uk-icon`
+ */
+/* SVG
+ ========================================================================== */
+ .uk-spinner > * {
+  -webkit-animation: uk-spinner-rotate 1.4s linear infinite;
+          animation: uk-spinner-rotate 1.4s linear infinite;
+}
+
+@-webkit-keyframes uk-spinner-rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+}
+
+@keyframes uk-spinner-rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+}
+
+/*
+ * Circle
+ */
+.uk-spinner > * > * {
+  stroke-dasharray: 88px;
+  stroke-dashoffset: 0;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  -webkit-animation: uk-spinner-dash 0.9s ease-in-out infinite;
+          animation: uk-spinner-dash 0.9s ease-in-out infinite;
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+@-webkit-keyframes uk-spinner-dash {
+  0% {
+    stroke-dashoffset: 88px;
+  }
+  50% {
+    stroke-dashoffset: 22px;
+    -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 88px;
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+
+@keyframes uk-spinner-dash {
+  0% {
+    stroke-dashoffset: 88px;
+  }
+  50% {
+    stroke-dashoffset: 22px;
+    -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 88px;
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+
+
+
+
+/* ---------------------------------- */
+/* nprogress
+------------------------------------- */
+ /* Make clicks pass-through */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: #29d;
+
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+  opacity: 1.0;
+
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+      -ms-transform: rotate(3deg) translate(0px, -4px);
+          transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* Remove these to get rid of the spinner */
+#nprogress .spinner {
+  display: block;
+  position: fixed;
+  z-index: 1031;
+  top: 15px;
+  right: 15px;
+}
+
+#nprogress .spinner-icon {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+
+  border: solid 2px transparent;
+  border-top-color: #29d;
+  border-left-color: #29d;
+  border-radius: 50%;
+
+  -webkit-animation: nprogress-spinner 400ms linear infinite;
+          animation: nprogress-spinner 400ms linear infinite;
+}
+
+.nprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
+
+.nprogress-custom-parent #nprogress .spinner,
+.nprogress-custom-parent #nprogress .bar {
+  position: absolute;
+}
+
+@-webkit-keyframes nprogress-spinner {
+  0%   { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes nprogress-spinner {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#nprogress .bar {
+  height:6px;
+}
+ 
+#nprogress .bar {
+  background: purple;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: blue;
+  border-left-color: blue;
+}
+
+
+
+.app_header {
+  min-height: 55px;
+  transition: all 0.45s cubic-bezier(0, 0, 0, 1.09);
+}
+  .app_header .app_header__title { transition: all 0.2s ease;  }
+  .app_header.uk-sticky-fixed .app_header__title {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.35rem;
+    padding-left: 6px;
+    position: absolute;
+    margin-top: 0 !important;
+  }
+  .app_header.uk-sticky-fixed .app_header__back~.app_header__title {
+    top: 19px !important;
+    right: 50%;
+    padding-left:0;
+    /* transform: translate(50%, -50%); */
+    transform: translate(50%) !important;
+  }
+ 
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-x-hidden::-webkit-scrollbar , 
+.scrollbar-y-hidden::-webkit-scrollbar{
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-x-hidden  , 
+.scrollbar-y-hidden {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-x-hidden {
+  overflow-x: scroll;
+}
+.scrollbar-y-hidden {
+  overflow-y: scroll;
+}
+
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar , .uk-offcanvas-page::-webkit-scrollbar{
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body , .uk-offcanvas-page{
+overflow-y: scroll;
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}
+
+
+
+.hide_search .app_header__search {
+  display: none;
+ }
+ .hide_search.dont-hide .app_header__search {
+   display: block !important;
+  }
+
+ 
+ 
+
