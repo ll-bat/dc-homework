@@ -3,13 +3,20 @@
 
 {% load static %}
 
-{% block head %}
-    <head>
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href='{% static "project_template/images/favicon.png" %}'>
+        <link rel="stylesheet" href='{% static "project_template/css/uikit.css" %}'>
+        <link rel="stylesheet" href='{% static "project_template/css/styles.css" %}'>
         <title> DC assignment </title>
-    </head>
-{% endblock head %}
+    {% endblock head %}
+</head>
 
+<body>
 {% block body %}
-    <body>
-    </body>
 {% endblock body %}
+<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+<script src="{% static 'project_template/js/uikit.js' %}"></script>
+</body>

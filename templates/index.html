@@ -1,196 +1,130 @@
 {% extends "base.html" %}
 
 {% block head %}
-    {% load static %}
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href='{% static "project_template/images/favicon.png" %}'>
-        <link rel="stylesheet" href='{% static "project_template/css/uikit.css" %}'>
-        <link rel="stylesheet" href='{% static "project_template/css/styles.css" %}'>
-        <title> DC assignment </title>
-        <style>
+    {{ block.super }}
+    <style>
 
-            .demo header .container {
-                max-width: 1150px;
-            }
+        .demo header .container {
+            max-width: 1150px;
+        }
 
-            .demo .container {
-                padding: 0 32px;
-                max-width: 1080px;
-                position: relative;
-                margin-left: auto;
-                margin-right: auto;
-            }
+        .demo .container {
+            padding: 0 32px;
+            max-width: 1080px;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
 
-            .delimiter-bottom,
-            .delimiter-top {
-                position: relative
-            }
+        .delimiter-bottom,
+        .delimiter-top {
+            position: relative
+        }
 
-            .delimiter-top:before {
-                position: absolute;
-                top: 0;
-                left: 50%;
-                display: block;
-                width: 80%;
-                height: 1px;
-                margin-left: -40%;
-                content: '';
-                background: radial-gradient(ellipse at center, rgba(0, 0, 0, .2) 0, rgba(255, 255, 255, 0) 75%)
-            }
+        .delimiter-top:before {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            display: block;
+            width: 80%;
+            height: 1px;
+            margin-left: -40%;
+            content: '';
+            background: radial-gradient(ellipse at center, rgba(0, 0, 0, .2) 0, rgba(255, 255, 255, 0) 75%)
+        }
 
-            .delimiter-bottom:after {
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                display: block;
-                width: 80%;
-                height: 1px;
-                margin-left: -40%;
-                content: '';
-                background: radial-gradient(ellipse at center, rgba(0, 0, 0, .2) 0, rgba(255, 255, 255, 0) 75%)
-            }
+        .delimiter-bottom:after {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            display: block;
+            width: 80%;
+            height: 1px;
+            margin-left: -40%;
+            content: '';
+            background: radial-gradient(ellipse at center, rgba(0, 0, 0, .2) 0, rgba(255, 255, 255, 0) 75%)
+        }
 
 
-        </style>
-    </head>
+    </style>
 {% endblock head %}
 
 {% block body %}
-    <body class="demo" id="container">
+    {% load static %}
 
-    <div class="hero">
+    <div class="demo" id="container">
 
-        <header class="py-4">
-            <div class="container flex items-center justify-between mx-auto">
-                <a href="#" class="flex font-semibold items-center text-xl">
-                    <ion-icon name="book" class="mr-2 text-2xl"></ion-icon>
-                    BookStore
-                </a>
-                <div class="flex items-center space-x-4">
-                    <nav>
-                        <ul class="flex items-center space-x-3">
-                            <li><a href="#overview" uk-scroll> Overview</a></li>
-                            <li><a href="#demo" uk-scroll> Demo</a></li>
-                            <li><a href="#features" uk-scroll> Features</a></li>
-                            <li><a href="#"></a></li>
-                        </ul>
-                    </nav>
-                    <a href="#" class="bg-black font-medium px-4 py-1.5 rounded-full text-sm text-white"> Buy Now</a>
-                </div>
-            </div>
-        </header>
+        <div class="hero">
 
-        <div class="mt-20 relative" id="overview">
-            <div class="absolute bg-gradient-to-b bottom-0 from-transparent h-60 left-0 to-gray-50 w-full"></div>
-            <div class="container mx-auto">
+            <header class="py-4">
+                <div class="container flex items-center justify-between mx-auto">
+                    <a href="#" class="flex font-semibold items-center text-xl">
+                        <ion-icon name="book" class="mr-2 text-2xl"></ion-icon>
+                        BookSearch
+                    </a>
+                    <div class="flex items-center space-x-4">
+                        <nav>
+                            <ul class="flex items-center space-x-3">
+                                {% if request.user.is_authenticated %}
+                                    <li><a href="{% url 'signout' %}"> Sign-out </a></li>
+                                {% else %}
+                                    <li><a href="{% url 'login' %}"> Login </a></li>
 
-                <div class="mx-12 text-center">
-                    <h1 class="text-5xl font-extrabold"> BookStore Library Management </h1>
-                    <p class="mt-3 max-w-2xl mx-auto" hidden>
-                        Develop a simple and functional application for mobile that
-                        will allow the user to read books anytime, anywhere.
-                    </p>
-
-                    <div class="flex space-x-2 items-center justify-center">
-                        <a href="#" class="text-white font-semibold px-5 rounded-md bg-black py-2 mt-8 inline-block">
-                            Buy
-                            Now from $24 </a>
-                        <a href="#" class="font-semibold px-5 rounded-md  bg-gray-100 py-2 mt-8 inline-block">
-                            Preview </a>
+                                {% endif %}
+                                <li><a href="{% url 'signup' %}"> Signup </a></li>
+                            </ul>
+                        </nav>
+                        <a href="#" class="bg-black font-medium px-4 py-1.5 rounded-full text-sm text-white">
+                            Search Book
+                        </a>
                     </div>
-
                 </div>
-                <img src="{% static 'project_template/images/demo/hero-1.png' %}" alt="" class="w-full mt-16">
-            </div>
-        </div>
+            </header>
 
-    </div>
+            <div class="mt-20 relative" id="overview">
+                <div class="absolute bg-gradient-to-b bottom-0 from-transparent h-60 left-0 to-gray-50 w-full"></div>
+                <div class="container mx-auto">
 
+                    <div class="mx-12 text-center">
+                        <h1 class="text-5xl font-extrabold"> Book Search By ISBN </h1>
+                        <p class="mt-3 max-w-2xl mx-auto" hidden>
+                            Search for any book by ISBN number
+                        </p>
 
-    <div class="bg-white py-24">
-        <div class="container">
+                        <div class="flex space-x-2 items-center justify-center">
+                            <a href="#"
+                               class="text-white font-semibold px-5 rounded-md bg-black py-2 mt-8 inline-block">
+                                <span class=""> Search </span>
+                            </a>
+                        </div>
 
-            <div class="grid grid-cols-3 gap-x-5 gap-y-10">
-
-                <div class="space-x-3 flex items-center">
-                    <ion-icon name="reader" class="text-4xl rounded-full p-2.5 bg-gray-800 text-white"></ion-icon>
-                    <div class="text-xl"> User Friendly <br> Design</div>
-                </div>
-                <div class="space-x-3 flex items-center">
-                    <ion-icon name="cog" class="text-4xl rounded-full p-2.5 bg-gray-800 text-white"></ion-icon>
-                    <div class="text-xl"> Modern Features</div>
-                </div>
-                <div class="space-x-3 flex items-center">
-                    <ion-icon name="leaf" class="text-4xl rounded-full p-2.5 bg-gray-800 text-white"></ion-icon>
-                    <div class="text-xl"> Clean Markup</div>
-                </div>
-                <div class="space-x-3 flex items-center">
-                    <ion-icon name="hourglass" class="text-4xl rounded-full p-2.5 bg-gray-800 text-white"></ion-icon>
-                    <div class="text-xl"> color palette</div>
-                </div>
-                <div class="space-x-3 flex items-center">
-                    <ion-icon name="moon" class="text-4xl rounded-full p-2.5 bg-gray-800 text-white"></ion-icon>
-                    <div class="text-xl"> Dark and Light <br> Schemes</div>
-                </div>
-                <div class="space-x-3 flex items-center">
-                    <ion-icon name="layers" class="text-4xl rounded-full p-2.5 bg-gray-800 text-white"></ion-icon>
-                    <div class="text-xl"> Customizable <br> Components</div>
-                </div>
-
-            </div>
-
-
-        </div>
-    </div>
-
-
-    <div class="bg-white py-24 delimiter-top" id="features">
-        <div class="container">
-
-            <h1 class="text-5xl leading-snug font-bold"><span class="text-red-500"> Book — Store </span> Develop a
-                simple
-                and functional application for mobile that will allow the user to read books </h1>
-            <h1 class="text-5xl leading-snug font-bold"> Is built by <span
-                    class="text-red-500"> Tailwind — framework </span> Rapidly build modern websites without ever
-                leaving
-                your HTML </h1>
-
-            <div class="grid lg:grid-cols-2 lg:gap-10 mt-16">
-                <div>
-                    <h1 class="text-2xl font-semibold mb-2"> Everything is modular </h1>
-                    <p class="text-lg"> Nicely customized components that can be reused anytime and anywhere in your
-                        project</p>
-                </div>
-
-                <div>
-                    <h1 class="text-2xl font-semibold mb-2"> Extended color palette </h1>
-                    <p class="text-lg"> A beautiful color palette that can be easily modified with our nicely coded Sass
-                        files.</p>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-semibold mb-2"> Create a beautiful App </h1>
-                    <p class="text-lg"> Use BookStore to create a trustworthy foundation for your project and build
-                        better
-                        App Library.</p>
-                </div>
-
-                <div>
-                    <h1 class="text-2xl font-semibold mb-2"> 120+ Components </h1>
-                    <p class="text-lg"> Nicely customized components that can be reused anytime and anywhere in your
-                        project</p>
+                    </div>
+                    <img src="{% static 'project_template/images/demo/hero-1.png' %}" alt="" class="w-full mt-16">
                 </div>
             </div>
 
         </div>
+
+        <div class="bg-white py-24 delimiter-top" id="features">
+            <div class="container">
+                <div class="text-center mb-5">
+                    Enter ISBN
+                </div>
+                <label>
+                    <input type="text"
+                           placeholder="Enter ISBN"
+                           name="isbn"
+                           class="px-3 py-3 w-full bg-gray-100 rounded-md input-border">
+                </label>
+            </div>
+        </div>
+
+        <div class="bg-white py-24 delimiter-top" id="features">
+            <div class="container">
+                <h1> #ISBN description section </h1>
+            </div>
+        </div>
+
     </div>
-
-
-    <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
-    <script src="{% static 'project_template/js/uikit.js' %}"></script>
-    <script src="{% static 'project_template/js/nprogress.js' %}"></script>
-
-    </body>
 {% endblock body %}
