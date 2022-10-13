@@ -46,6 +46,27 @@
             background: radial-gradient(ellipse at center, rgba(0, 0, 0, .2) 0, rgba(255, 255, 255, 0) 75%)
         }
 
+        .list-style-circle {
+            list-style-type: circle;
+        }
+
+        .card-shadow {
+            box-shadow:
+                0 4px 5px 0 rgb(0 0 0 / 14%),
+                0 1px 10px 0 rgb(0 0 0 / 12%),
+                0 2px 4px -1px rgb(0 0 0 / 20%);
+        }
+
+        .btn-primary {
+            background: #5a5aec;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #c35454;
+            color: white;
+        }
+
     </style>
 {% endblock head %}
 
@@ -118,8 +139,8 @@
                     </form>
 
                     <div class="mt-5 ml-3">
-                        <div id="loader" class="text-center">
-                            <div class="spinner spinner-border" style="display: none"></div>
+                        <div id="loader" class="text-center" style="display: none">
+                            <div class="spinner spinner-border"></div>
                         </div>
 
                         <div id="book-info">
@@ -160,32 +181,36 @@
                                 the five elements may be of varying length:
                             </p>
                             <ul>
-                                <li>
-                                    Prefix element – currently this can only be either 978 or 979. It is always 3 digits
+                                <li class="list-style-circle ml-3">
+                                    <b>Prefix element</b> – currently this can only be either 978 or 979. It is always 3
+                                    digits
                                     in
                                     length
                                 </li>
-                                <li>
-                                    Registration group element – this identifies the particular country, geographical
+                                <li class="list-style-circle ml-3">
+                                    <b>Registration group element</b> – this identifies the particular country,
+                                    geographical
                                     region, or
                                     language area participating in the ISBN system. This element may be between 1 and 5
                                     digits
                                     in length
                                 </li>
-                                <li>
-                                    Registrant element - this identifies the particular publisher or imprint. This may
+                                <li class="list-style-circle ml-3">
+                                    <b>Registrant element</b> - this identifies the particular publisher or imprint.
+                                    This may
                                     be up to
                                     7 digits
                                     in length
                                 </li>
-                                <li>
-                                    Publication element – this identifies the particular edition and format of a
+                                <li class="list-style-circle ml-3">
+                                    <b>Publication element</b> – this identifies the particular edition and format of a
                                     specific title.
                                     This
                                     may be up to 6 digits in length
                                 </li>
-                                <li>
-                                    Check digit – this is always the final single digit that mathematically validates
+                                <li class="list-style-circle ml-3">
+                                    <b>Check digit</b> – this is always the final single digit that mathematically
+                                    validates
                                     the rest
                                     of the
                                     number. It is calculated using a Modulus 10 system with alternate weights of 1 and
@@ -280,11 +305,15 @@
             $form.addEventListener('submit', async e => {
                 e.preventDefault()
 
+                clearErrors()
+                clearBookInfo()
+
                 const isbn = $isbnInput.value;
                 if (!validateISBN(isbn)) {
-                    alert('Please, enter correct book ISBN');
+                    showError('Please, enter correct ISBN');
                     return
                 }
+
 
                 showLoader()
 
@@ -293,34 +322,104 @@
                 hideLoader()
 
                 if (ok) {
-                    showBookInfo(data)
+                    if (data.length === 1) {
+                        showBookInfo(data[0]);
+                    } else {
+                        showBookInfo('No book was found with ISBN: ' + isbn)
+                    }
                 } else {
                     showError(errorMessage)
                 }
             })
 
             function validateISBN(isbn) {
-                return true;
+                `
+                - Prefix element – currently this can only be either 978 or 979. It is always 3 digits in length
+                - Registration group element – this identifies the particular country, geographical region, or language area participating in the ISBN system. This element may be between 1 and 5 digits in length
+                - Registrant element - this identifies the particular publisher or imprint. This may be up to 7 digits in length
+                - Publication element – this identifies the particular edition and format of a specific title. This may be up to 6 digits in length
+                - Check digit – this is always the final single digit that mathematically validates the rest of the number. It is calculated using a Modulus 10 system with alternate weights of 1 and 3.
+                `
+                if (isbn.length === 13) {
+                    const regex = /^(978|979)\d{1,5}\d{1,7}\d{1,6}(\d)$/
+                    if (regex.test(isbn)) {
+                        const match = isbn.match(regex);
+                        const checkDigit = Number(match[2]);
+
+                        let result = 0;
+                        for (let i = 0; i < 12; i++) {
+                            let number = Number(isbn[i]);
+                            if (i % 2 === 0) {
+                                result += number
+                            } else {
+                                result += number * 3
+                            }
+                        }
+
+                        result %= 10
+
+                        if (result !== 0) {
+                            result = 10 - result;
+                        }
+
+                        return result === checkDigit;
+                    }
+                } else if (isbn.length === 10) {
+                    const regex = /^\d{1,5}\d{1,7}\d{1,6}(\d)$/
+                    if (regex.test(isbn)) {
+                        const match = isbn.match(regex)
+                        const checkDigit = Number(match[1])
+
+                        let result = 0;
+                        for (let i = 0; i < 9; i++) {
+                            result += Number(isbn[i]) * (10 - i);
+                        }
+
+                        result %= 11;
+
+                        if (result !== 0) {
+                            result = 11 - result
+                        }
+                        return result === checkDigit;
+                    }
+                }
+                return false;
             }
 
             async function getBook(isbn) {
                 const fullUrl = new URL(bookInfoUrl)
                 fullUrl.searchParams.append('isbn', isbn)
 
-                try {
-                    const bookInfo = await fetch(fullUrl).then(res => res.json())
+                const response = await fetch(fullUrl, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const responseJson = await response.json();
+
+                if (response.ok) {
                     return {
                         ok: true,
-                        data: bookInfo,
-                        errorMessage: null,
+                        data: responseJson,
+                        errorMessage: null
                     }
-                } catch (e) {
+                } else {
                     return {
                         ok: false,
                         data: null,
-                        errorMessage: 'some error occurred'
+                        errorMessage: getErrorMessages(responseJson)
                     }
                 }
+
+            }
+
+            function getErrorMessages(responseData) {
+                const {non_field_errors} = responseData
+                if (non_field_errors && non_field_errors.length) {
+                    return non_field_errors[0];
+                }
+                return null;
             }
 
             const $bookInfoDiv = document.querySelector('#book-info');
@@ -328,15 +427,78 @@
             const $loader = document.querySelector('#loader')
 
             function showBookInfo(bookInfo) {
+                if (typeof bookInfo === "string") {
+                    $bookInfoDiv.innerHTML = `
+                        <p> ${bookInfo} </p>
+                    `
+                    return
+                }
+                ``
+                let {
+                    title,
+                    description,
+                    authors,
+                    publisher,
+                    published_date,
+                    page_count,
+                    categories,
+                    image_links,
+                    language,
+                    preview_link,
+                    info_link
+                } = bookInfo;
+                if (description.length > 500) {
+                    description = description.substring(0, 500) + '...'
+                }
+
                 $bookInfoDiv.innerHTML = `
-                    Some book info goes here
+                    <div class='row justify-content-center text-center'>
+                        <div class='col-12 col-md-8 col-lg-6'>
+                            <div class='card card-shadow border p-4' style='border-radius: 20px'>
+                                <b style='font-size: 1.2rem'> ${title} </b>
+                                <img class='m-auto'
+                                     src='${image_links["thumbnail"]}'
+                                     width='150px'
+                                     style='margin-top: 30px !important; border-radius: 20px'
+                                     alt='book-image' />
+                                <p class='my-3'>
+                                    Authors: ${authors.join(', ')}
+                                </p>
+                                <p class='text-muted my-3'>
+                                    Published at: ${published_date}
+                                </p>
+
+                                <div class='alert alert-secondary' style='background: #f8f9fd; border: 1px solid #f7f7f7'>
+                                    Language: <b>${language}</b> | Pages: <b>${page_count}</b>
+                                </div>
+
+                                <div class='text-left'>
+                                    <b class='my-4'> Description </b>
+                                    <p class='my-4'> ${description} </p>
+                                </div>
+
+                                <div class='text-left my-4'>
+                                    <a href='${preview_link}' target='_blank' class='btn btn-primary'> Preview </a>
+                                    <a href='${info_link}' target='_blank' class='btn btn-danger'> Info </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 `
+            }
+
+            function clearBookInfo() {
+                $bookInfoDiv.innerHTML = ''
             }
 
             function showError(error) {
                 $errorMessageDiv.innerHTML = `
-                    This is special error message
+                    <p class="text-danger">* ${error} </p>
                 `
+            }
+
+            function clearErrors() {
+                $errorMessageDiv.innerHTML = ''
             }
 
             function showLoader() {

@@ -1,11 +1,19 @@
+import json
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, AnonymousUser
+from django.core import serializers
+from django.forms import model_to_dict
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
 from app.forms import LoginForm, SignupForm
+from app.helpers import validate_isbn
+from app.models import Book
+from app.services import GoogleBookApiService
 
 
 # Create your views here.
@@ -24,7 +32,58 @@ def user(request):
 
 @login_required
 def get_book(request):
-    pass
+    isbn = request.GET.get('isbn', '')
+    if not validate_isbn(isbn):
+        error = json.dumps({'non_field_errors': ['Please, provide valid ISBN']})
+        return HttpResponse(content=error, status=400)
+
+    book = Book.objects.filter(isbn=isbn).first()
+    if book:
+        json_data = json.dumps([model_to_dict(book)])
+        return HttpResponse(json_data)
+    else:
+        result = GoogleBookApiService.get_book_by_isbn(isbn)
+        if not result['ok']:
+            error = json.dumps({'non_field_errors': [result['error_message']]})
+            return HttpResponse(content=error, status=400)
+
+        api_data = result['data']
+        if not api_data:
+            # no book was found
+            return HttpResponse(json.dumps([]))
+
+        api_field_to_model_field_mapper = {
+            'title': 'title',
+            'description': 'description',
+            'authors': 'authors',
+            'publisher': 'publisher',
+            'publishedDate': 'published_date',
+            'pageCount': 'page_count',
+            'categories': 'categories',
+            'imageLinks': 'image_links',
+            'language': 'language',
+            'previewLink': 'preview_link',
+            'infoLink': 'info_link',
+        }
+
+        model_data = {
+            model_key: api_data.get(api_key)
+            for api_key, model_key in api_field_to_model_field_mapper.items()
+        }
+
+        new_book = Book(**{
+            **model_data,
+            'isbn': isbn,
+            'created_by': request.user,
+            'updated_by': request.user,
+        })
+        try:
+            new_book.save()
+        except Exception as e:
+            pass
+
+        json_data = json.dumps([model_to_dict(new_book)])
+        return HttpResponse(json_data)
 
 
 @login_required
