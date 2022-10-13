@@ -46,17 +46,14 @@
             background: radial-gradient(ellipse at center, rgba(0, 0, 0, .2) 0, rgba(255, 255, 255, 0) 75%)
         }
 
-
     </style>
 {% endblock head %}
 
 {% block body %}
     {% load static %}
 
-    <div class="demo" id="container">
-
+    <div class="demo">
         <div class="hero">
-
             <header class="py-4">
                 <div class="container flex items-center justify-between mx-auto">
                     <a href="#" class="flex font-semibold items-center text-xl">
@@ -81,8 +78,7 @@
                     </div>
                 </div>
             </header>
-
-            <div class="mt-20 relative" id="overview">
+            <div class="mt-20 relative">
                 <div class="absolute bg-gradient-to-b bottom-0 from-transparent h-60 left-0 to-gray-50 w-full"></div>
                 <div class="container mx-auto">
 
@@ -103,26 +99,159 @@
                     <img src="{% static 'project_template/images/demo/hero-1.png' %}" alt="" class="w-full mt-16">
                 </div>
             </div>
-
         </div>
 
-        <div class="bg-white py-24 delimiter-top" id="features">
-            <div class="container">
-                <div class="text-center mb-5">
-                    Enter ISBN
+        <div class="container">
+            <div class="row py-24 delimiter-top">
+                <div class="col-12">
+                    <div class="text-center mb-5">
+                        Enter ISBN
+                    </div>
+                    <label class="w-100">
+                        <input type="text"
+                               placeholder="Enter ISBN"
+                               name="isbn"
+                               class="form-control">
+                    </label>
                 </div>
-                <label>
-                    <input type="text"
-                           placeholder="Enter ISBN"
-                           name="isbn"
-                           class="px-3 py-3 w-full bg-gray-100 rounded-md input-border">
-                </label>
             </div>
         </div>
 
-        <div class="bg-white py-24 delimiter-top" id="features">
+
+        <div class="bg-white py-24 delimiter-top">
             <div class="container">
-                <h1> #ISBN description section </h1>
+                <i class="text-sm text-secondary"> #ISBN description section </i>
+                <div class="row">
+                    <div class="col-12 col-lg-4">
+                        <img src="{% static 'project_template/images/isbn.png' %}" alt="isbn"/>
+                    </div>
+                    <div class="col-12 col-lg-8">
+                        <div class="content">
+                            <p class="font-weight-bold my-3">What is an ISBN? </p>
+                            <hr class="my-2"/>
+                            <p>
+                                An ISBN is an International Standard Book Number. ISBNs were 10 digits in length up to
+                                the end
+                                of
+                                December 2006, but since 1 January 2007 they now always consist of 13 digits. ISBNs are
+                                calculated
+                                using a specific mathematical formula and include a check digit to validate the number.
+                            </p>
+                            <p>
+                                Each ISBN consists of 5 elements with each section being separated by spaces or hyphens.
+                                Three
+                                of
+                                the five elements may be of varying length:
+                            </p>
+                            <ul>
+                                <li>
+                                    Prefix element – currently this can only be either 978 or 979. It is always 3 digits
+                                    in
+                                    length
+                                </li>
+                                <li>
+                                    Registration group element – this identifies the particular country, geographical
+                                    region, or
+                                    language area participating in the ISBN system. This element may be between 1 and 5
+                                    digits
+                                    in length
+                                </li>
+                                <li>
+                                    Registrant element - this identifies the particular publisher or imprint. This may
+                                    be up to
+                                    7 digits
+                                    in length
+                                </li>
+                                <li>
+                                    Publication element – this identifies the particular edition and format of a
+                                    specific title.
+                                    This
+                                    may be up to 6 digits in length
+                                </li>
+                                <li>
+                                    Check digit – this is always the final single digit that mathematically validates
+                                    the rest
+                                    of the
+                                    number. It is calculated using a Modulus 10 system with alternate weights of 1 and
+                                    3.
+                                </li>
+                            </ul>
+                            <p class="font-weight-bold my-3"> What is an ISBN used for? </p>
+                            <p>
+                                An ISBN is essentially a product identifier used by publishers, booksellers, libraries,
+                                internet
+                                retailers and other supply chain participants for ordering, listing, sales records and
+                                stock
+                                control
+                                purposes. The ISBN identifies the registrant as well as the specific title, edition and
+                                format.
+                            </p>
+                            <p class="font-weight-bold my-3">What does an ISBN identify? </p>
+                            <p>
+                                ISBNs are assigned to text-based monographic publications (i.e. one-off publications
+                                rather than
+                                journals, newspapers, or other types of serials).
+                            </p>
+
+                            <p>
+                                Any book made publicly available, whether for sale or on a gratis basis, can be
+                                identified by
+                                ISBN.
+                            </p>
+                            <p>
+
+                                In addition, individual sections (such as chapters) of books or issues or articles from
+                                journals,
+                                periodicals or serials that are made available separately may also use the ISBN as an
+                                identifier.
+                            </p>
+                            <p>
+                                With regard to the various media available, it is of no importance in what form the
+                                content is
+                                documented and distributed; however, each different product form (e.g. paperback, EPUB,
+                                .pdf)
+                                should
+                                be identified separately.
+                            </p>
+                            <p>
+                                You can find examples of types of qualifying products and more information about the
+                                scope of
+                                the
+                                ISBN here.
+                            </p>
+                            <p class="font-weight-bold my-3">ISBNs, the law and copyright</p>
+
+                            <p>
+                                The ISBN is an identifier and does not convey any form of legal or copyright protection.
+                                However, in
+                                some countries the use of ISBN to identify publications has been made into a legal
+                                requirement.
+                            </p>
+
+                            <p class="font-weight-bold my-3">Who should apply for ISBN?</p>
+
+                            <p>
+                                It is always the publisher of the book who should apply for the ISBN. For the purposes
+                                of ISBN,
+                                the
+                                publisher is the group, organisation, company or individual who is responsible for
+                                initiating
+                                the
+                                production of a publication. Normally, it is also the person or body who bears the cost
+                                and
+                                financial risk in making a product available. It is not normally the printer, but it can
+                                be the
+                                author of the book if the author has chosen to publish their book themselves.
+                            </p>
+                            <p>
+                                In a number of countries there is detailed legislation regarding publishing so contact
+                                your
+                                national
+                                ISBN agency in good time for advice.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
