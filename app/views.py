@@ -11,12 +11,20 @@ from app.forms import LoginForm, SignupForm
 # Create your views here.
 
 def home(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', {
+        'book_url': request.build_absolute_uri(reverse('get_book')),
+        'is_guest': not request.user.is_authenticated
+    })
 
 
 @login_required
 def user(request):
     return redirect('/')
+
+
+@login_required
+def get_book(request):
+    pass
 
 
 @login_required

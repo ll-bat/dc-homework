@@ -11,21 +11,6 @@
             margin: auto;
         }
 
-        .input-border {
-            border: 2px solid transparent;
-        }
-
-        .input-border:focus {
-            background-color: white !important;
-            border: 2px solid lightgrey;
-            outline: none !important;
-            transition: all .1s ease-in;
-        }
-
-        .text-danger {
-            color: red;
-        }
-
     </style>
 {% endblock head %}
 
@@ -53,17 +38,17 @@
 
             <form action="{% url 'login' %}" method="post" class="space-y-3">
                 {% csrf_token %}
-                <label>
+                <label class="w-100">
                     <input type="text"
                            placeholder="Username"
                            name="username"
-                           class="px-3 py-3 w-full bg-gray-100 rounded-md input-border">
+                           class="w-100 px-3 py-3 w-full bg-gray-100 rounded-md input-border">
                 </label>
-                <label>
+                <label class="w-100">
                     <input type="password"
                            placeholder="Password"
                            name="password"
-                           class="mt-2 px-3 py-3 w-full bg-gray-100 rounded-md input-border">
+                           class="w-100 mt-2 px-3 py-3 w-full bg-gray-100 rounded-md input-border">
                 </label>
 
                 <div class="flex justify-center w-full pb-4 text-gray-400">

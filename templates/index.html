@@ -87,14 +87,6 @@
                         <p class="mt-3 max-w-2xl mx-auto" hidden>
                             Search for any book by ISBN number
                         </p>
-
-                        <div class="flex space-x-2 items-center justify-center">
-                            <a href="#"
-                               class="text-white font-semibold px-5 rounded-md bg-black py-2 mt-8 inline-block">
-                                <span class=""> Search </span>
-                            </a>
-                        </div>
-
                     </div>
                     <img src="{% static 'project_template/images/demo/hero-1.png' %}" alt="" class="w-full mt-16">
                 </div>
@@ -105,14 +97,41 @@
             <div class="row py-24 delimiter-top">
                 <div class="col-12">
                     <div class="text-center mb-5">
-                        Enter ISBN
+                        Search books by ISBN
                     </div>
-                    <label class="w-100">
-                        <input type="text"
-                               placeholder="Enter ISBN"
-                               name="isbn"
-                               class="form-control">
-                    </label>
+                    <form id="search-by-isbn">
+                        <label class="w-100">
+                            {% if is_guest %}
+                                <input type="text"
+                                       id="isbn"
+                                       disabled
+                                       placeholder="Login to search books"
+                                       class="w-100 px-3 py-3 w-full bg-gray-100 rounded-md input-border">
+                            {% else %}
+                                <input type="text"
+                                       id="isbn"
+                                       placeholder="Enter ISBN"
+                                       class="w-100 px-3 py-3 w-full bg-gray-100 rounded-md input-border">
+                            {% endif %}
+
+                        </label>
+                    </form>
+
+                    <div class="mt-5">
+                        <div id="loader" class="text-center">
+                            <div class="spinner spinner-border" style="display: none"></div>
+                        </div>
+
+                        <div id="book-info">
+                            <p class="text-muted text-secondary ml-4" style="font-size: .8em">
+                                * Book info will appear here
+                            </p>
+                        </div>
+
+                        <div id="error-message">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -256,4 +275,80 @@
         </div>
 
     </div>
+    <script>
+        (function () {
+            const bookInfoUrl = "{{ book_url }}";
+            const $form = document.querySelector('#search-by-isbn');
+            const $isbnInput = $form.querySelector('#isbn');
+            $form.addEventListener('submit', async e => {
+                e.preventDefault()
+
+                const isbn = $isbnInput.value;
+                if (!validateISBN(isbn)) {
+                    alert('Please, enter correct book ISBN');
+                    return
+                }
+
+                showLoader()
+
+                const {ok, data, errorMessage} = await getBook(isbn);
+
+                hideLoader()
+
+                if (ok) {
+                    showBookInfo(data)
+                } else {
+                    showError(errorMessage)
+                }
+            })
+
+            function validateISBN(isbn) {
+                return true;
+            }
+
+            async function getBook(isbn) {
+                const fullUrl = new URL(bookInfoUrl)
+                fullUrl.searchParams.append('isbn', isbn)
+
+                try {
+                    const bookInfo = await fetch(fullUrl).then(res => res.json())
+                    return {
+                        ok: true,
+                        data: bookInfo,
+                        errorMessage: null,
+                    }
+                } catch (e) {
+                    return {
+                        ok: false,
+                        data: null,
+                        errorMessage: 'some error occurred'
+                    }
+                }
+            }
+
+            const $bookInfoDiv = document.querySelector('#book-info');
+            const $errorMessageDiv = document.querySelector('#error-message')
+            const $loader = document.querySelector('#loader')
+
+            function showBookInfo(bookInfo) {
+                $bookInfoDiv.innerHTML = `
+                    Some book info goes here
+                `
+            }
+
+            function showError(error) {
+                $errorMessageDiv.innerHTML = `
+                    This is special error message
+                `
+            }
+
+            function showLoader() {
+                $loader.style.display = 'block';
+            }
+
+            function hideLoader() {
+                $loader.style.display = 'none';
+            }
+        })()
+    </script>
 {% endblock body %}
