@@ -64,7 +64,7 @@
                         <nav>
                             <ul class="flex items-center space-x-3">
                                 {% if request.user.is_authenticated %}
-                                    <li><a href="{% url 'signout' %}"> Sign-out </a></li>
+                                    <li><a href="{% url 'signout' %}"> Logout </a></li>
                                 {% else %}
                                     <li><a href="{% url 'login' %}"> Login </a></li>
 
@@ -79,7 +79,7 @@
                 </div>
             </header>
             <div class="mt-20 relative">
-                <div class="absolute bg-gradient-to-b bottom-0 from-transparent h-60 left-0 to-gray-50 w-full"></div>
+                <div class="absolute bg-gradient-to-b bottom-0 from-transparent h-50 left-0 to-gray-50 w-full"></div>
                 <div class="container mx-auto">
 
                     <div class="mx-12 text-center">
