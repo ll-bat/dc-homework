@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block head %}
     {{ block.super }}
@@ -16,6 +16,9 @@
 
 {% block body %}
     <div class="bg-white auth-template-card">
+        <div class="position-absolute">
+            <a class="text-primary" href="{% url 'home' %}"> Home Page </a>
+        </div>
         <div class="flex flex-col justify-center h-screen p-6 text-center">
             <div class="space-y-6">
                 <div>
@@ -37,6 +40,10 @@
                     </li>
                 {% endfor %}
             </div>
+
+            {% if success_message %}
+                <p class="alert alert-success text-dark"> {{ success_message }}</p>
+            {% endif %}
 
             {% block auth_template_body %}
             {% endblock auth_template_body %}

@@ -1,15 +1,18 @@
 import json
+import os
 
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, views as auth_views
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User, AnonymousUser
-from django.core import serializers
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
 from django.forms import model_to_dict
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from django.views import View
-
 from app.forms import LoginForm, SignupForm
 from app.helpers import validate_isbn
 from app.models import Book
@@ -23,11 +26,6 @@ def home(request):
         'book_url': request.build_absolute_uri(reverse('get_book')),
         'is_guest': not request.user.is_authenticated
     })
-
-
-@login_required
-def user(request):
-    return redirect('/')
 
 
 @login_required
@@ -92,19 +90,39 @@ def logout_view(request):
     return redirect('/')
 
 
-class Login(View):
+class CustomView(View):
+    def get_error_tuples_from_request(self):
+        errors = self.request.session.get('errors') or {}
+        errors = errors.items()
+        self.request.session['errors'] = None
+        return errors
+
+    def get_success_message_from_request(self):
+        success_message = self.request.session.get('success_message', None)
+        self.request.session['success_message'] = None
+        return success_message
+
+    def render(self, request, template_name, context=None, *args, **kwargs):
+        if not context:
+            context = {}
+
+        if 'errors' not in context:
+            context['errors'] = self.get_error_tuples_from_request()
+        if 'success_message' not in context:
+            context['success_message'] = self.get_success_message_from_request()
+
+        return render(request, template_name, context, *args, **kwargs)
+
+
+class Login(CustomView):
     def get(self, request):
         if request.user.is_authenticated:
-            return redirect('user')
+            return redirect(reverse('home'))
 
-        errors = request.session.get('errors') or {}
-        errors = errors.items()
-        request.session['errors'] = None
-        return render(request, 'login.html', {
-            'errors': errors
-        })
+        return self.render(request, 'auth/login.html')
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             clean_data = login_form.cleaned_data
@@ -114,7 +132,7 @@ class Login(View):
             )
             if user:
                 login(request, user)
-                return redirect('user')
+                return redirect(reverse('home'))
             else:
                 request.session['errors'] = {'username': ['Such user does not exist']}
                 return redirect('login')
@@ -123,25 +141,73 @@ class Login(View):
             return redirect('login')
 
 
-class Signup(View):
+class Signup(CustomView):
     def get(self, request):
-        errors = request.session.get('errors') or {}
-        errors = errors.items()
-        request.session['errors'] = None
-        return render(request, 'signup.html', {
-            'errors': errors
-        })
+        return self.render(request, 'auth/signup.html')
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         signup_form = SignupForm(request.POST)
         if signup_form.is_valid():
             clean_data = signup_form.cleaned_data
-            user = User.objects.create_user(
+            User.objects.create_user(
                 username=clean_data.get('username'),
                 email=clean_data.get('email'),
                 password=clean_data.get('password'),
             )
+            request.session['success_message'] = 'You have signed up successfully'
             return redirect('login')
         else:
             request.session['errors'] = signup_form.errors
             return redirect('signup')
+
+
+class PasswordResetDoneView(auth_views.PasswordResetDoneView):
+    template_name = "auth/password_reset_done.html"
+
+
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = "auth/password_reset_confirm.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        form = kwargs.get("form")
+        if not form:
+            return context
+
+        return {
+            **context,
+            "errors": form.errors.items()
+        }
+
+
+class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    template_name = "auth/password_reset_complete.html"
+
+
+class PasswordResetView(CustomView):
+    def get(self, request):
+        return self.render(request, 'auth/password_reset.html')
+
+    @staticmethod
+    def post(request):
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            email = password_reset_form.cleaned_data['email']
+            user = User.objects.filter(email=email).first()
+            if user:
+                token = default_token_generator.make_token(user)
+                user_uuid = urlsafe_base64_encode(force_bytes(user.pk))
+                password_reset_link = reverse(
+                    'password_reset_confirm',
+                    kwargs={'uidb64': user_uuid, 'token': token}
+                )
+                return render(request, 'auth/password_reset.html', {
+                    'password_reset_link': password_reset_link
+                })
+            else:
+                request.session['errors'] = {
+                    'email': ['No such email was found']
+                }
+                return redirect(reverse('password_reset'))
