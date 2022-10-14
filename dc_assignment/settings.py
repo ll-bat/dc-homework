@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     # {
-        # 'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # 'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     # },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
@@ -168,3 +168,8 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+SECURE_PROXY_SSL_HEADER = (
+    env.str(var='SECURE_PROXY_SSL_HEADER', default=''),
+    env.str(var='SECURE_PROXY_SSL_HEADER_VALUE', default='')
+)
