@@ -29,8 +29,7 @@ SECRET_KEY = env.str(var='SECRET_KEY', default='')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = env.str(var='ALLOWED_HOSTS', default='').split(',')
 # Application definition
 
 INSTALLED_APPS = [
