@@ -1,6 +1,8 @@
-### Fully dockerized Book Search application 
+### Fully dockerized Book Search application
 
-#### Supports 
+#### here is the [demo url](https://dc-homework.herokuapp.com/)
+
+#### App Supports 
  - Searching books by ISBN number (10 digit or 13 digit) 
  - Authorization/Registration (Social login with **Gmail** and **Facebook** is supported)
  - Forgot password feature 
