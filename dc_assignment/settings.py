@@ -30,6 +30,7 @@ SECRET_KEY = env.str(var='SECRET_KEY', default='')
 DEBUG = True
 
 ALLOWED_HOSTS = env.str(var='ALLOWED_HOSTS', default='').split(',')
+CSRF_TRUSTED_ORIGINS = env.str(var='CSRF_TRUSTED_ORIGINS', default='').split()
 # Application definition
 
 INSTALLED_APPS = [
