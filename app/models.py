@@ -12,7 +12,7 @@ class Book(models.Model):
 
     authors = models.JSONField(blank=True, null=True)
     publisher = models.CharField(max_length=256, blank=True, null=True)
-    published_date = models.SmallIntegerField(blank=True, null=True)
+    published_date = models.CharField(max_length=15, blank=True, null=True)
     page_count = models.SmallIntegerField(blank=True, null=True)
     categories = models.JSONField(blank=True, null=True)
     image_links = models.JSONField(blank=True, null=True)
