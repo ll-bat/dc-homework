@@ -87,7 +87,7 @@ def get_book(request):
 
 
 @login_required
-def signout(request):
+def logout_view(request):
     logout(request)
     return redirect('/')
 
