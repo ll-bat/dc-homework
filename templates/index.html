@@ -51,10 +51,9 @@
         }
 
         .card-shadow {
-            box-shadow:
-                0 4px 5px 0 rgb(0 0 0 / 14%),
-                0 1px 10px 0 rgb(0 0 0 / 12%),
-                0 2px 4px -1px rgb(0 0 0 / 20%);
+            box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%),
+            0 1px 10px 0 rgb(0 0 0 / 12%),
+            0 2px 4px -1px rgb(0 0 0 / 20%);
         }
 
         .btn-primary {
@@ -85,17 +84,29 @@
                         <nav>
                             <ul class="flex items-center space-x-3">
                                 {% if request.user.is_authenticated %}
-                                    <li><a href="{% url 'signout' %}"> Logout </a></li>
+                                    <li>
+                                        <div class="dropdown">
+                                            <button type="button"
+                                                    class="dropdown-toggle"
+                                                    data-toggle="dropdown"
+                                            >
+                                                {{  request.user.username }}
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{% url 'signout' %}"> Logout </a>
+                                            </div>
+                                        </div>
+
+                                    </li>
                                 {% else %}
-                                    <li><a href="{% url 'login' %}"> Login </a></li>
+                                    <li><a class="btn btn-danger" style="border-radius: 20px" href="{% url 'login' %}">
+                                        Login </a></li>
 
                                 {% endif %}
-                                <li><a href="{% url 'signup' %}"> Signup </a></li>
+                                <li><a class="btn btn-primary" style="border-radius: 20px" href="{% url 'signup' %}">
+                                    Signup </a></li>
                             </ul>
                         </nav>
-                        <a href="#" class="bg-black font-medium px-4 py-1.5 rounded-full text-sm text-white">
-                            Search Book
-                        </a>
                     </div>
                 </div>
             </header>
@@ -325,7 +336,7 @@
                     if (data.length === 1) {
                         showBookInfo(data[0]);
                     } else {
-                        showBookInfo('No book was found with ISBN: ' + isbn)
+                        showBookInfo('No book was found with this ISBN number: ' + isbn)
                     }
                 } else {
                     showError(errorMessage)
@@ -449,6 +460,14 @@
                 } = bookInfo;
                 if (description.length > 500) {
                     description = description.substring(0, 500) + '...'
+                }
+                if (!image_links) {
+                    image_links = {
+                        thumbnail: '{% static "project_template/images/thumbnail.jpg" %}'
+                    }
+                }
+                if (!authors) {
+                    authors = []
                 }
 
                 $bookInfoDiv.innerHTML = `
