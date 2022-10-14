@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {{ block.super }}
+    <style>
+        .auth-template-card {
+            border: 1px solid black;
+            padding: 20px;
+            width: 500px;
+            height: auto;
+            margin: auto;
+        }
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+    <div class="bg-white auth-template-card">
+        <div class="flex flex-col justify-center h-screen p-6 text-center">
+            <div class="space-y-6">
+                <div>
+                    <ion-icon name="book-outline"
+                              class=" w-10 h-10 rounded-full text-white p-3 from-blue-500 to-purple-500 bg-gradient-to-br shadow-lg text-xl">
+                    </ion-icon>
+                </div>
+                <h1 class="text-3xl font-semibold mb-5">
+                    {% block auth_template_title %}
+                    {% endblock auth_template_title %}
+                </h1>
+            </div>
+
+            <div class="text-left ml-2 my-2">
+                {% for field, message in errors %}
+                    <li class="text-danger">
+                        <b class="text-danger"> {{ field }}: </b>
+                        <span> {{ message.0 }} </span>
+                    </li>
+                {% endfor %}
+            </div>
+
+            {% block auth_template_body %}
+            {% endblock auth_template_body %}
+
+        </div>
+    </div>
+{% endblock body %}

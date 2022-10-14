@@ -1,0 +1,52 @@
+{% extends 'auth/auth_form_template.html' %}
+
+{% load socialaccount %}
+
+{% block auth_template_title %}
+    Login to BookSearch
+{% endblock auth_template_title %}
+
+{% block auth_template_body %}
+    <form action="{% url 'login' %}" method="post" class="space-y-3">
+        {% csrf_token %}
+        <label class="w-100">
+            <input type="text"
+                   placeholder="Username"
+                   name="username"
+                   class="w-100 px-3 py-3 w-full bg-gray-100 rounded-md input-border">
+        </label>
+        <label class="w-100">
+            <input type="password"
+                   placeholder="Password"
+                   name="password"
+                   class="w-100 mt-2 px-3 py-3 w-full bg-gray-100 rounded-md input-border">
+        </label>
+
+        <div class="flex justify-center w-full pb-4 text-gray-400">
+            <a href="#">Forgot Password</a>
+        </div>
+
+        <input type="submit"
+               value="Login"
+               class="p-3 w-full bg-gradient-to-br from-gray-600 to-gray-500 rounded-md text-white cursor-pointer">
+    </form>
+
+    <h3 class="mx-auto text-xs uk-heading-line text-center w-full my-4 pt-3"><span> or </span></h3>
+
+    <div class="flex justify-center items-center space-x-2">
+        <form method="post" action="{% provider_login_url 'google' %}" id="google-form">
+            {% csrf_token %}
+            <input type="submit" style="display: none"/>
+        </form>
+        <a class="h-10 w-10 text-2xl bg-red-500 rounded-full shadow text-white text-center flex items-center justify-center cursor-pointer"
+           onclick="document.querySelector('#google-form').submit()">
+            <ion-icon name="logo-google"></ion-icon>
+        </a>
+        <a href="{% url 'social:begin' 'facebook' %}"
+           class="h-10 w-10 text-3xl bg-blue-500 shadow rounded-full text-white text-center flex items-center justify-center">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a>
+    </div>
+
+    <p class="mt-6"> New User? <a href="{% url 'signup' %}" class="text-blue-500">Create Account</a></p>
+{% endblock auth_template_body %}

@@ -1,0 +1,46 @@
+{% extends 'auth/auth_form_template.html' %}
+
+{% block auth_template_title %}
+    Register to BookSearch
+{% endblock auth_template_title %}
+
+{% block auth_template_body %}
+    <form action="{% url 'signup' %}" method="post" class="space-y-3">
+        {% csrf_token %}
+        <label class="w-100">
+            <input type="text"
+                   placeholder="Username"
+                   name="username"
+                   class="px-3 py-3 w-full bg-gray-100 rounded-md input-border mt-2">
+        </label>
+        <label class="w-100">
+            <input type="text"
+                   placeholder="Email"
+                   name="email"
+                   class="px-3 py-3 w-full bg-gray-100 rounded-md input-border mt-2">
+        </label>
+        <label class="w-100">
+            <input type="password"
+                   placeholder="Create Password"
+                   name="password"
+                   class="px-3 py-3 w-full bg-gray-100 rounded-md input-border mt-2">
+        </label>
+        <label class="w-100">
+            <input type="password"
+                   placeholder="Confirm Password"
+                   name="confirm_password"
+                   class="px-3 py-3 w-full bg-gray-100 rounded-md input-border mt-2">
+        </label>
+        <!--<input type="submit" value="Join" class="p-3 w-full bg-gradient-to-br from-gray-600 to-gray-500 rounded-md text-white">-->
+        <input type="submit"
+               value="Signup"
+               class="p-3 w-full bg-gray-600 rounded-md text-white block cursor-pointer">
+    </form>
+
+    <p class="mt-4">
+        Have an account?
+        <a href="{% url 'login' %}" class="text-blue-500">
+            Login
+        </a>
+    </p>
+{% endblock auth_template_body %}
