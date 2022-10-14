@@ -145,6 +145,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'app.backends.EmailBackend',
 )
 
 LOGIN_URL = 'login'

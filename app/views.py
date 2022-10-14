@@ -84,12 +84,6 @@ def get_book(request):
         return HttpResponse(json_data)
 
 
-@login_required
-def logout_view(request):
-    logout(request)
-    return redirect('/')
-
-
 class CustomView(View):
     def get_error_tuples_from_request(self):
         errors = self.request.session.get('errors') or {}
